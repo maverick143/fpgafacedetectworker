@@ -1,0 +1,54 @@
+layer {
+  name: "data"
+  type: "Input"
+  top: "data"
+  input_param {
+    shape {
+      dim: 1
+      dim: 3
+      dim: 320
+      dim: 320
+    }
+  }
+}
+layer {
+  name: "xfdnn/subgraph0"
+  type: "Python"
+  bottom: "data"
+  top: "pixel-conv"
+  top: "bb-output"
+  python_param {
+    module: "xfdnn.rt.scripts.framework.caffe.CaffeXFDNN"
+    layer: "CaffeXFDNN"
+    param_str: "{\'batch_sz\': 1, \'outtrainproto\': None, \'input_names\': [u\'data\'], \'cutAfter\': \'data\', \'outproto\': \'xfdnn_deploy.prototxt\', \'xdnnv3\': True, \'inproto\': \'deploy.prototxt\', \'overlaycfg\': {u\'XDNN_NUM_KERNELS\': u\'2\', u\'SDX_VERSION\': u\'2018.2\', u\'XDNN_VERSION_MINOR\': u\'0\', u\'XDNN_SLR_IDX\': u\'1, 1\', u\'XDNN_DDR_BANK\': u\'0, 3\', u\'XDNN_CSR_BASE\': u\'0x1800000, 0x1810000\', u\'XDNN_BITWIDTH\': u\'8\', u\'DSA_VERSION\': u\'xilinx_u200_xdma_201820_1\', u\'XDNN_VERSION_MAJOR\': u\'3\'}, \'profile\': False, \'trainproto\': None, \'weights\': \'deploy.caffemodel_data.h5\', \'quantizecfg\': \'deploy.compiler_quant.json\', \'xclbin\': \'/wrk/hdstaff/elliott/git/MLsuite/overlaybins/alveo-u200/overlay_4.xclbin\', \'netcfg\': \'deploy.compiler.json\', \'output_names\': [u\'pixel-conv\', u\'bb-output\']}"
+  }
+}
+#layer {
+#  name: "pixel-tile"
+#  type: "GSTiling"
+#  bottom: "pixel-conv"
+#  top: "pixel-conv-tiled"
+#  phase: TRAIN
+#  gs_tiling_param {
+#    stride: 8
+#    reverse: true
+#  }
+#}
+#layer {
+#  name: "bb-tile"
+#  type: "GSTiling"
+#  bottom: "bb-output"
+#  top: "bb-output-tiled"
+#  phase: TRAIN
+#  gs_tiling_param {
+#    stride: 8
+#    reverse: true
+#  }
+#}
+#layer {
+#  name: "pixel-prob"
+#  type: "Softmax"
+#  bottom: "pixel-conv-tiled"
+#  top: "pixel-prob"
+#  phase: TRAIN
+#}
