@@ -48,7 +48,7 @@ docker run \
   --log-driver none \
   -it \
   $docker_devices \
-  -v $HERE/share:/opt/ml-suite/share \
+  -v $HERE/facedetect:/opt/ml-suite/facedetect \
   -v /opt/xilinx:/opt/xilinx \
   -w /opt/ml-suite \
   xilinx-ml-suite-ubuntu-16.04-xrt-2018.2-caffe-mls-1.4:latest \

@@ -1,1 +1,1 @@
-# fpgafacedetectworker
+# fpgafacedetectworker app
